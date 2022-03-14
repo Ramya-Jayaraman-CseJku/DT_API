@@ -1,0 +1,2 @@
+# API_SmartHomeAutomation
+FastAPI_for SmartHome_CRUD Operations
