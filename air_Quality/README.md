@@ -1,6 +1,6 @@
 # AirQuality_UseCase
 
-In this project, we are analysing the air quality data from scd_30 sensor in timescale database.
+In this project, we are analysing the air quality data from scd_30 sensor in timescale database.  Remote connection is established  between the raspi and windows through the socket programming. The air quality data obtained from sensor is stored in the timescale database in windows machine using the fastAPI. 
 
 Hardware_Requirements:
 
@@ -8,25 +8,39 @@ Hardware_Requirements:
     <li>RaspberryPi</li>
     <li>SCD_30 Sensor</li>
 </ol>
-
-Software Installation:
+**Software Requirements:**
 
 *Install PostgreSQL database in windows based on the instructions.
 
 Download the PostgreSQL installer for windows from the [link]('https://www.postgresql.org/download/windows/'). Follow the installation instructions provided. Choose the components such as PostgreSQL Server, pgAdmin4, command line tools to install. Set up the password, default port for database server and locale.
 
-Verify the PostgreSQL Installation:
+**Verify the PostgreSQL Installation:**
 
 Open the command line tool of PostgreSQL(psql). Enter the connection details prompted in CLI. Press Enter to accept the default choices in the square brackets.  The default values are Server-(localhost), Database- name of the database, Port-(5432), Username and Password. Once the authentication is complete, you will be logged into the database.
 
-FastAPI for AirQuality_Sensor_Data
+**Setting Up the PostgreSQL Database:**
 
-This project establishes remote connection  between the raspi and windows through the socket programming. The air quality data is obtained from sensor and stored in the postgresql database in windows machine using the fastAPI. 
+After successful login into the database, we can create the necessary tables for the airquality data
 
-Run the [client.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/client.py') from raspi to establish remote connection to fastAPI running in windows machine. The fastAPI handles the postgreSQL database connection and CRUD operations on database.
+We need two tables ( room and airqualityproperties ) for storing the airquality data. Refer the [schema](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql) for creation of these tables. Execute the table schema from psql command line and check if the tables are created as shown in ![figure](https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC/images/listDbTables.png)
+
+*The **room** table should be created first , since the **room_id** of the table is used as the foreign key in the **airqualityproperties** Table.
+
+**Set up Raspberry pi**
 
 The SCD_30 sensor is connected with the raspberry pi based on the [pin connections]('https://github.com/derlehner/IndoorAirQuality_DigitalTwin_Exemplar/tree/main/physical_twin/hardware_setup').
-The list of API's are used for performing CRUD operations for the air quality use case.  The fastAPI is connected to the PostgreSQL database with the SQLAlchemy library and the data can be stored and retrieved from the database with the CRUD operations in API .
+
+Connect to the raspi using ssh from command line as follows
+
+``ssh username@ip-address-of-raspi``
+
+After logging into the raspi, run the [server.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/server.py') for sending data from raspi to windows.
+
+The client.py establishes  remote connection from raspi to windows machine and sends sensor data. The fastAPI handles the postgreSQL database connection and performs CRUD operations on database.
+
+**fast API**
+
+fastAPI written in python used for performing CRUD operations for the air quality use case.  The fastAPI is connected to the PostgreSQL database with the SQLAlchemy library and the data can be stored and retrieved from the database with the CRUD operations in API .
 
 The Http Verbs and its usage are as follows: 
 
@@ -37,14 +51,13 @@ The Http Verbs and its usage are as follows:
     <li> DELETE - Delete the record from database tables based on request parameters.<br/>
 </li>
 </ul>
+**fast API Setup:**
 
-fastAPI Setup:
+Create the virtual environment using the venv python library as shown below and then install the  necessary libraries to run the fastAPI. The project dependent libraries are present in the [requirements.txt]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/requirements.txt') file. Open the windows terminal and type the following command to create the virtual env as follows:
 
-The [project]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC')  has the requirements.txt file. It contains the dependent libraries that are necessary to run the project. These libraries need to be installed in advance to run the project. Create the virtual environment using the venv python library to install the  libraries. Open the windows terminal and type the following command to create the virtual env. Here 
+In the command below, the library name is venv and env is name of the virtual environment.
 
-the library name is venv and next venv is name of the virtual environment.
-
-``python -m venv venv``
+``python -m venv env``
 
 Activate the Virtual Environment:
 
@@ -58,11 +71,11 @@ Install dependencies using Pip:
 
 ``pip install -r requirements.txt``
 
-Run the fastAPI:
+**Run the fastAPI:**
 
 Navigate to the [project]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC/app') and run [main.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/app/main.py') from your windows. You can see the fastAPI running in the uvicorn server in port 8080. Navigate to the address in browser('http://localhost:8080/docs') to view the fastAPI GUI.
 
-Once the database and fastAPI is setup in windows, we can perform crud operations from fastAPI to store and retrieve air quality data from raspi to database.
+Once the server.py is running in the raspberrypi, it sends data to the client machine and then the fastAPI running in the client will send and receive data from the database. We can perform crud operations from fastAPI to store and retrieve air quality data from raspi to database.
 
 
 
