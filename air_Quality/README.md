@@ -2,7 +2,7 @@
 
 In this project, we are analysing the air quality data from scd_30 sensor in timescale database.  Remote connection is established  between the raspi and windows through the socket programming. The air quality data obtained from sensor is stored in the timescale database in windows machine using the fastAPI. 
 
-Hardware_Requirements:
+##### Hardware_Requirements:
 
 <ol>
     <li>RaspberryPi</li>
