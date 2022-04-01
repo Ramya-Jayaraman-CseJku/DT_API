@@ -24,7 +24,7 @@ After successful login , we can create the database AQUC  using the command from
 
 ``CREATE DATABASE Database_Name``
 
-We need two tables ( room and airqualityproperties ) for storing the airquality data. Refer the [schema](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql) for creation of these tables. Execute the table schema from psql command line and check if the tables are created as shown in ![figure]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/images/Db&Tables.png')
+We need two tables ( room and airqualityproperties ) for storing the airquality data. Refer the [schema](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql) for creation of these tables. Execute the table schema from psql command line and check if the tables are created as shown in ![figure]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/images/Db%26Tables.png')
 
 *The **room** table should be created first , since the **room_id** of the table is used as the foreign key in the **airqualityproperties** Table.
 
