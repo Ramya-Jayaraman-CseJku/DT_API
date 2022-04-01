@@ -26,7 +26,7 @@ Login into the pgAdmin4 with the username(postgres) and password.
 
 After successful login , we can create the database AQUC  by right click on the databases and then create database.
 
-![createDatabase](./images/createDatabsePsql.png) 
+![createDatabase](./images/createDatabasePsql.png) 
 
 ##### Create Tables:
 
