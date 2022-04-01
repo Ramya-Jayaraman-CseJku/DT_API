@@ -20,13 +20,67 @@ Open the command line tool of PostgreSQL(psql). Enter the connection details pro
 
 ##### Setting Up the Postgresql Database:
 
-After successful login , we can create the database AQUC  using the command from psql command line
+With the pgAdmin4, a graphical GUI for postgresql database, we can create database, tables and perform query operations.
 
-``CREATE DATABASE Database_Name``
+Login into the pgAdmin4 with the username(postgres) and password.
 
-We need two tables ( room and airqualityproperties ) for storing the airquality data. Refer the [schema](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql) for creation of these tables. Execute the table schema from psql command line and check if the tables are created as shown in ![figure](./images/Db%26Tables.png)
+After successful login , we can create the database AQUC  by right click on the databases and then create database.
+
+![createDatabase](./images/createDatabsePsql.png) 
+
+##### Create Tables:
+
+Right click on the created database in pgAdmin4 and then go to QueryTool for executing the psql commands. Refer the [schema]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql.txt') for creation of these tables. copy paste the schema in the query tool for table creation and press F5 or execute button in the tool bar.
+
+![TableCreation](./images/tableCreation.png)
+
+
+
+We need two tables ( room and airqualityproperties ) for storing the airquality data. 
 
 *The **room** table should be created first , since the **room_id** of the table is used as the foreign key in the **airqualityproperties** Table.
+
+#### Installation and SetUp of the Timescale Database:
+
+##### 1. Install docker 
+
+Based on the os, install the docker from the [link]('https://docs.docker.com/get-docker/'). For windows os, we need to install the docker desktop, enable the WSL2 feature and install [linux package]('https://docs.microsoft.com/en-in/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package'). 
+
+##### 2. Set up the timescale databse
+
+We can also set up the timescale database using docker and access them using psql.
+
+Once the docker desktop is setup, execute the command in command line
+
+``docker pull timescale/timescaledb:latest-pg14``
+
+The command pulls the timescale docker image
+
+![timeScale_Image](./images/pullTimescaleImage.png)
+
+##### Run the timescale image from container
+
+The -p flag in command binds the docker container to port 5432, so we can access the port to access the timescale database container. Set the password for postgresql using the POSTGRES_PASSWORD environment variable. If there is no password specified, then the docker disables the password checks for all the users.
+
+``docker run -d --name timescaledb -p 5432:5432 -e POSTGRES_PASSWORD=password timescale/timescaledb:latest-pg14``
+
+if you have the port allocated already , change the port number as shown below.
+
+![port](./images/runContainer.png)
+
+Connect to the postgresql instance as the postgres user 
+
+``psql -U postgres -h localhost ``
+
+After successful login , we can create the database AQUC  using the command from psql command line
+
+``CREATE DATABASE Database_Name;``
+
+We need two tables ( room and airqualityproperties ) for storing the airquality data. Refer the [schema]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql.txt') for creation of these tables. Execute the table schema from psql command line and check if the tables are created as shown below.
+
+![figure](./images/Db&Tables.png) 
+
+Once the tables are created then we can run the server first from raspi and then the client in windows and also the fastAPI for storing the data in the tables.
 
 ##### Set up Raspberry pi
 
