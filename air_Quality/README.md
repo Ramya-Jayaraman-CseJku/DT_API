@@ -126,12 +126,17 @@ Install dependencies using Pip:
  Navigate to the [folder]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC') and run the command
 
 ``pip install -r requirements.txt``
-
+##### Set up Postgres Database Credentials:
+Update the database credentials in the [.env]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/app/.env') file accordingly. The username, password and database name is important. By default the port is 5432 and server is localhost. 
 ##### Run the fastAPI:
 
 Navigate to the [project]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC/app') and run [main.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/app/main.py') from your windows. You can see the fastAPI running in the uvicorn server in port 8080. Navigate to the address in browser('http://localhost:8080/docs') to view the fastAPI GUI.
+##### Run the Client:
+In order to receive the sensor data from raspberrypi, run the [client.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/client.py') from windows machine. Run the [Server.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Server.py') first in raspberry pi before running the client.
+The client posts sensor data to the fast api url running in windows machine. The data is sent as post request to "http://localhost:8080/Room/AirQuality/", where Room/AirQuality is the fastapi url path for post request.
+The data can be inserted into postgresql database via fast api or can be inserted directly into the database by establishing connection. this is done in [database function]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/client.py') in client.py script. In the postgres_insert_query "airqualityproperties" is the table name. You need to change the table and column names accordingly based on the table created.
 
-Once the server.py is running in the raspberrypi, it sends data to the client machine and then the fastAPI running in the client will send and receive data from the database. We can perform crud operations from fastAPI to store and retrieve air quality data from raspi to database.
+Once the server.py is running in the raspberrypi, it sends data to the client machine. The client.py will enter the sensor values directly into table and also uses the fastapi to do the same. If data needs to be inserted with fastapi, it must be running in the client machine. We can perform crud operations from fastAPI to store and retrieve air quality data from raspi to database.
 
 
 
