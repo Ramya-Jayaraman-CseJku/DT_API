@@ -8,9 +8,9 @@ In this project, we are analysing the air quality data from scd_30 sensor in tim
     <li>SCD_30 Sensor</li>
 </ol>
 **Software Requirements:**
-*Install PostgreSQL database in windows based on the instructions.
+Install PostgreSQL database in windows based on the instructions.
 
-Download the PostgreSQL installer for windows from the [link]('https://www.postgresql.org/download/windows/'). Follow the installation instructions provided. Choose the components such as PostgreSQL Server, pgAdmin4, command line tools to install. Set up the password, default port for database server and locale.
+Download the PostgreSQL installer for windows from the [link](https://www.postgresql.org/download/windows/). Follow the installation instructions provided. Choose the components such as PostgreSQL Server, pgAdmin4, command line tools to install. Set up the password, default port for database server and locale.
 
 ##### Verify the PostgreSQL Installation:
 
@@ -28,7 +28,7 @@ After successful login , we can create the database AQUC  by right click on the 
 
 ##### Create Tables:
 
-Right click on the created database in pgAdmin4 and then go to QueryTool for executing the psql commands. Refer the [schema]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql.txt') for creation of these tables. copy paste the schema in the query tool for table creation and press F5 or execute button in the tool bar.
+Right click on the created database in pgAdmin4 and then go to QueryTool for executing the psql commands. Refer the [schema](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql.txt) for creation of these tables. copy paste the schema in the query tool for table creation and press F5 or execute button in the tool bar.
 
 ![TableCreation](./images/tableCreation.png)
 
@@ -42,7 +42,7 @@ We need two tables ( room and airqualityproperties ) for storing the airquality 
 
 ##### 1. Install docker 
 
-Based on the os, install the docker from the [link]('https://docs.docker.com/get-docker/'). For windows os, we need to install the docker desktop, enable the WSL2 feature and install [linux package]('https://docs.microsoft.com/en-in/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package'). 
+Based on the os, install the docker from the [link](https://docs.docker.com/get-docker/). For windows os, we need to install the docker desktop, enable the WSL2 feature and install [linux package](https://docs.microsoft.com/en-in/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package). 
 
 ##### 2. Set up the timescale databse
 
@@ -74,7 +74,7 @@ After successful login , we can create the database AQUC  using the command from
 
 ``CREATE DATABASE Database_Name;``
 
-We need two tables ( room and airqualityproperties ) for storing the airquality data. Refer the [schema]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql.txt') for creation of these tables. Execute the table schema from psql command line and check if the tables are created as shown below.
+We need two tables ( room and airqualityproperties ) for storing the airquality data. Refer the [schema](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Database_Schema_AirQuality.sql.txt) for creation of these tables. Execute the table schema from psql command line and check if the tables are created as shown below.
 
 ![figure](./images/Db&Tables.png) 
 
@@ -82,13 +82,13 @@ Once the tables are created then we can run the server first from raspi and then
 
 ##### Set up Raspberry pi
 
-The SCD_30 sensor is connected with the raspberry pi based on the [pin connections]('https://github.com/derlehner/IndoorAirQuality_DigitalTwin_Exemplar/tree/main/physical_twin/hardware_setup').
+The SCD_30 sensor is connected with the raspberry pi based on the [pin connections](https://github.com/derlehner/IndoorAirQuality_DigitalTwin_Exemplar/tree/main/physical_twin/hardware_setup).
 
 Connect to the raspi using ssh from command line as follows
 
 ``ssh username@ip-address-of-raspi``
 
-After logging into the raspi, run the [Server.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Server.py') for sending data from raspi to windows.
+After logging into the raspi, run the [Server.py](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Server.py) for sending data from raspi to windows.
 
 The client.py establishes  remote connection from raspi to windows machine and sends sensor data. The fastAPI handles the postgreSQL database connection and performs CRUD operations on database.
 
@@ -108,7 +108,7 @@ The Http Verbs and its usage are as follows:
 
 **fast API Setup:**
 
-Create the virtual environment using the venv python library as shown below and then install the  necessary libraries to run the fastAPI. The project dependent libraries are present in the [requirements.txt]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/requirements.txt') file. Open the windows terminal and type the following command to create the virtual env as follows:
+Create the virtual environment using the venv python library as shown below and then install the  necessary libraries to run the fastAPI. The project dependent libraries are present in the [requirements.txt](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/requirements.txt) file. Open the windows terminal and type the following command to create the virtual env as follows:
 
 In the command below, the library name is venv and env is name of the virtual environment.
 
@@ -122,18 +122,18 @@ After the virtual environment is created, run the command to activate it.
 
 Install dependencies using Pip:
 
- Navigate to the [folder]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC') and run the command
+ Navigate to the [folder](https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC) and run the command
 
 ``pip install -r requirements.txt``
 ##### Set up Postgres Database Credentials:
-Update the database credentials in the .env file inside [app]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC/app') folder accordingly. The username, password and database name is important. By default the port is 5432 and server is localhost. 
+Update the database credentials in the .env file inside [app](https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC/app/.env) folder accordingly. The username, password and database name is important. By default the port is 5432 and server is localhost. 
 ##### Run the fastAPI:
 
-Navigate to the [project]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC/app') and run [main.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/app/main.py') from your windows. You can see the fastAPI running in the uvicorn server in port 8080. Navigate to the address in browser('http://localhost:8080/docs') to view the fastAPI GUI.
+Navigate to the [project]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/tree/main/air_Quality/fastAPI-AQUC/app') and run [main.py](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/app/main.py) from your windows. You can see the fastAPI running in the uvicorn server in port 8080. Navigate to the address in browser('http://localhost:8080/docs') to view the fastAPI GUI.
 ##### Run the Client:
-In order to receive the sensor data from raspberrypi, run the [client.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/client.py') from windows machine. Run the [Server.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Server.py') first in raspberry pi before running the client.
+In order to receive the sensor data from raspberrypi, run the [client.py]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/client.py') from windows machine. Run the [Server.py](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/Server.py) first in raspberry pi before running the client.
 The client posts sensor data to the fast api url running in windows machine. The data is sent as post request to "http://localhost:8080/Room/AirQuality/", where Room/AirQuality is the fastapi url path for post request.
-The data can be inserted into postgresql database via fast api or can be inserted directly into the database by establishing connection. this is done in [database function]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/client.py') in client.py script. In the postgres_insert_query "airqualityproperties" is the table name. You need to change the table and column names accordingly based on the table created.
+The data can be inserted into postgresql database via fast api or can be inserted directly into the database by establishing connection. this is done in [database function](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/client.py) in client.py script. In the postgres_insert_query "airqualityproperties" is the table name. You need to change the table and column names accordingly based on the table created.
 
 Once the server.py is running in the raspberrypi, it sends data to the client machine. The client.py will enter the sensor values directly into table and also uses the fastapi to do the same. If data needs to be inserted with fastapi, it must be running in the client machine. We can perform crud operations from fastAPI to store and retrieve air quality data from raspi to database.
 
