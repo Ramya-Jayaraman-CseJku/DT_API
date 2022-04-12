@@ -7,8 +7,7 @@ In this project, we are analysing the air quality data from scd_30 sensor in tim
     <li>RaspberryPi</li>
     <li>SCD_30 Sensor</li>
 </ol>
-**Software Requirements:
-**
+**Software Requirements:**
 *Install PostgreSQL database in windows based on the instructions.
 
 Download the PostgreSQL installer for windows from the [link]('https://www.postgresql.org/download/windows/'). Follow the installation instructions provided. Choose the components such as PostgreSQL Server, pgAdmin4, command line tools to install. Set up the password, default port for database server and locale.
@@ -106,7 +105,9 @@ The Http Verbs and its usage are as follows:
     <li> DELETE - Delete the record from database tables based on request parameters.<br/>
 </li>
 </ul>
+
 **fast API Setup:**
+
 Create the virtual environment using the venv python library as shown below and then install the  necessary libraries to run the fastAPI. The project dependent libraries are present in the [requirements.txt]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/requirements.txt') file. Open the windows terminal and type the following command to create the virtual env as follows:
 
 In the command below, the library name is venv and env is name of the virtual environment.
