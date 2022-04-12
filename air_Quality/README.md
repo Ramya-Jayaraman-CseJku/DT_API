@@ -2,8 +2,7 @@
 
 In this project, we are analysing the air quality data from scd_30 sensor in timescale database.  Remote connection is established  between the raspi and windows through the socket programming. The air quality data obtained from sensor is stored in the timescale database in windows machine using the fastAPI. 
 
-##### Hardware_Requirements:
-
+**Hardware_Requirements:**
 <ol>
     <li>RaspberryPi</li>
     <li>SCD_30 Sensor</li>
@@ -94,7 +93,7 @@ After logging into the raspi, run the [Server.py]('https://github.com/Ramya-Jaya
 
 The client.py establishes  remote connection from raspi to windows machine and sends sensor data. The fastAPI handles the postgreSQL database connection and performs CRUD operations on database.
 
-##### fast API
+**fast API**
 
 fastAPI written in python used for performing CRUD operations for the air quality use case.  The fastAPI is connected to the PostgreSQL database with the SQLAlchemy library and the data can be stored and retrieved from the database with the CRUD operations in API .
 
@@ -107,8 +106,8 @@ The Http Verbs and its usage are as follows:
     <li> DELETE - Delete the record from database tables based on request parameters.<br/>
 </li>
 </ul>
-##### fast API Setup:
-
+**fast API Setup:
+**
 Create the virtual environment using the venv python library as shown below and then install the  necessary libraries to run the fastAPI. The project dependent libraries are present in the [requirements.txt]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/fastAPI-AQUC/requirements.txt') file. Open the windows terminal and type the following command to create the virtual env as follows:
 
 In the command below, the library name is venv and env is name of the virtual environment.
