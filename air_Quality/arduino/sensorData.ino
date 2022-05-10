@@ -8,38 +8,32 @@ byte mac[] = { 0xA8, 0x61, 0x0A, 0xAE, 0x74, 0x2F };
 IPAddress ip(192, 168, 1, 113);
 EthernetClient client;
 
-int portNumber = 8000;
+int HTTP_PORT = 80;
 String HTTP_METHOD = "POST"; // or POST
-char server[]  = "https://c257-193-171-38-186.ngrok.io";
-const char* resource   = "/Room/AirQuality/";
-
+char HOST_NAME[]  = "https://58df-140-78-42-122.ngrok.io";
+String PATH_NAME   = "/Room/AirQuality/";
+char json[50];
 float co2;
-float temperature;
+float temperature;cd
 float humidity;
 String result;
 
 void setup() {
   initializeSensor();
-  initializeEthernet();
+ 
+  sendRequest();
 }
 
 void loop() {
   getSensorData();
-  if (connect(server, portNumber)) {
-    if (sendRequest(server, resource) && skipResponseHeaders()) {
-      Serial.print("HTTP POST request finished.");
-    }
-  }
- // disconnect();
-  wait();
+  
+  //wait();
 }
 
 void initializeSensor() {
   Serial.begin(9600);
   while (!Serial) delay(10);     // will pause Zero, Leonardo, etc until serial console opens
-
   Serial.println("Adafruit SCD30 test!");
-
   // Try to initialize!
   if (!scd30.begin()) {
     Serial.println("Failed to find SCD30 chip");
@@ -72,12 +66,13 @@ void getSensorData() {
     jsonObjects["co2"] = (float)scd30.CO2;
     jsonObjects["temperature"] = scd30.temperature;
     jsonObjects["humidity"] = scd30.relative_humidity;
-    //jsonObjects["time"]=str(datetime.fromtimestamp(time.time()))
-    jsonObjects["data"][0] = scd30.CO2;
-    jsonObjects["data"][1] =  scd30.temperature;
-    jsonObjects["data"][2] =  scd30.relative_humidity;
-    serializeJson(jsonObjects, Serial);
-
+    jsonObjects["time"]="2022-05-10T00:24:17.863Z";
+    //jsonObjects["data"][0] = scd30.CO2;
+    //jsonObjects["data"][1] =  scd30.temperature;
+   // jsonObjects["data"][2] =  scd30.relative_humidity;
+    serializeJson(jsonObjects, client);
+    
+    
   } else {
     // Serial.println("No data");
   }
@@ -85,8 +80,9 @@ void getSensorData() {
 
   return;
 }
-void initializeEthernet() {
-  if (!Ethernet.begin(mac)) {
+
+void sendRequest() {
+   if (!Ethernet.begin(mac)) {
     Serial.println("Failed to configure Ethernet");
     return;
   }
@@ -95,70 +91,37 @@ void initializeEthernet() {
   IPAddress ip = Ethernet.localIP();
   Serial.print("IP Address: ");
   Serial.println(ip);
-}
-bool connect(const char* hostName, int portNumber) {
-  Serial.print("Connect to ");
-  Serial.println(hostName);
-
-  bool ok = client.connect(hostName, portNumber);
-
-  Serial.println(ok ? "Connected" : "Connection Failed!");
-  return ok;
-}
-
-// Send the HTTP POST request to the server
-bool sendRequest(const char* host, const char* resource) {
-
-  Serial.print("POST ");
-  Serial.println(resource);
-  client.print("POST ");
-  client.print(resource);
-  client.println(" HTTP/1.1");
-  client.print("Host: ");
-  client.println(host);
-  client.println("Connection: close\r\nContent-Type: application/json");
-  client.print("\r\n");
-  client.println();
-
-  while (client.connected()) {
-    if (client.available()) {
-      //Read incoming byte from the server and print to the serial monitor
-      char c = client.read();
-      Serial.print(c);
+  
+  if (client.connect(HOST_NAME, HTTP_PORT)) {
+    // if connected:
+    Serial.println("Connected to server");
+    String room_id = "Room_S3_0089";
+    String queryString = String("?room_id=") + String(room_id);
+    // HTTP GET Request send HTTP header
+    client.println(HTTP_METHOD + " " + PATH_NAME + " HTTP/1.1");
+    client.println("Host: " + String(HOST_NAME));
+    client.println("Content-Type:application/json");
+    client.println("Accept:application/json");
+    client.println("Connection: close");
+    client.println(); // end HTTP header
+    client.println(queryString);
+    Serial.print(HTTP_METHOD + " " + PATH_NAME + " HTTP/1.1");
+    Serial.println();
+    Serial.print("Host: " + String(HOST_NAME));
+    Serial.println();
+    while (client.connected()) {
+      if (client.available()) {
+        // read an incoming byte from the server and print it to serial monitor:
+        char c = client.read();
+        Serial.print(c);
+      }
     }
-  }
-
-  delay(1000);
-  if (client.connected()) {
+    // the server's disconnected, stop the client:
     client.stop();
+    Serial.println();
+    Serial.println("disconnected");
+  } else {// if not connected:
+    Serial.println("connection failed");
   }
-  delay(6000);
-
-  return true;
-}
-
-// Skip HTTP headers so that we are at the beginning of the response's body
-bool skipResponseHeaders() {
-  // HTTP headers end with an empty line
-  char endOfHeaders[] = "\r\n\r\n";
-
-  // client.setTimeout(HTTP_TIMEOUT);
-  bool ok = client.find(endOfHeaders);
-
-  if (!ok) {
-    Serial.println("No response or invalid response!");
-  }
-  return ok;
-}
-
-// Close the connection with the HTTP server
-void disconnect() {
-  Serial.println("Disconnect");
-  client.stop();
-}
-
-// Pause for a 1 minute
-void wait() {
-  Serial.println("Wait 60 seconds");
-  delay(1000);
+  return;
 }
