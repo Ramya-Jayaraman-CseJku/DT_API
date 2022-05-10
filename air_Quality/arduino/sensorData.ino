@@ -9,14 +9,16 @@ IPAddress ip(192, 168, 1, 113);
 EthernetClient client;
 
 int HTTP_PORT = 80;
-String HTTP_METHOD = "POST"; // or POST
+String HTTP_METHOD = "POST"; // or GET
 char HOST_NAME[]  = "https://58df-140-78-42-122.ngrok.io";
 String PATH_NAME   = "/Room/AirQuality/";
 char json[50];
 float co2;
-float temperature;cd
+float temperature;
 float humidity;
 String result;
+// allocate the memory for the document
+StaticJsonDocument<256> jsonObjects;
 
 void setup() {
   initializeSensor();
@@ -26,8 +28,6 @@ void setup() {
 
 void loop() {
   getSensorData();
-  
-  //wait();
 }
 
 void initializeSensor() {
@@ -47,9 +47,6 @@ void initializeSensor() {
   Serial.println(" seconds");
 }
 void getSensorData() {
-  // allocate the memory for the document
-  StaticJsonDocument<256> jsonObjects;
-
   if (scd30.dataReady()) {
     Serial.println("Data available!");
 
@@ -70,7 +67,7 @@ void getSensorData() {
     //jsonObjects["data"][0] = scd30.CO2;
     //jsonObjects["data"][1] =  scd30.temperature;
    // jsonObjects["data"][2] =  scd30.relative_humidity;
-    serializeJson(jsonObjects, client);
+    serializeJson(jsonObjects, Serial);
     
     
   } else {
@@ -95,16 +92,15 @@ void sendRequest() {
   if (client.connect(HOST_NAME, HTTP_PORT)) {
     // if connected:
     Serial.println("Connected to server");
-    String room_id = "Room_S3_0089";
-    String queryString = String("?room_id=") + String(room_id);
-    // HTTP GET Request send HTTP header
+    
+    // HTTP POST Request send HTTP header
     client.println(HTTP_METHOD + " " + PATH_NAME + " HTTP/1.1");
     client.println("Host: " + String(HOST_NAME));
     client.println("Content-Type:application/json");
     client.println("Accept:application/json");
     client.println("Connection: close");
     client.println(); // end HTTP header
-    client.println(queryString);
+    serializeJson(jsonObjects, client);
     Serial.print(HTTP_METHOD + " " + PATH_NAME + " HTTP/1.1");
     Serial.println();
     Serial.print("Host: " + String(HOST_NAME));
