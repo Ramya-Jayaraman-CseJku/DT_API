@@ -27,7 +27,7 @@ To establish serial communication between arduino and raspberry_pi, we are using
 
 You should be able to see the port for instance, in our project it is
 
-``/dev/ttyACM0``
+``/dev/ttyACM0`
 
 Once the port is known, create a new python file and copy paste the [code](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/air_Quality/arduino/serialComm_Arduino_Raspi.py). The code has function "getArduinoSensorData" ,it establishes serial communication and reads the output from arduino serial output. The function "post_SensorData_API" gets the sensor data and sends it as post request to the fast_api hosted in web using the ngrok.
 

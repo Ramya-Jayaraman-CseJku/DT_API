@@ -21,6 +21,7 @@ class Update_RoomObject(BaseModel):
 
 class AirQuality_Properties_Object(BaseModel):
     room_id: str
+    device_id:str	
     ventilator:str
     totalnumberofpeople:int
     co2:float

@@ -74,7 +74,7 @@ async def delete_Room(room_id:str):
 
 @app.post("/Room/AirQuality/", response_model=AirQuality_Properties_Object, status_code = status.HTTP_201_CREATED)
 async def add_AirQuality_Properties(addAirQuality:AirQuality_Properties_Object):
-    db_AQP=Airqualityproperty(room_id=addAirQuality.room_id,ventilator=addAirQuality.ventilator,totalnumberofpeople=addAirQuality.totalnumberofpeople,co2=addAirQuality.co2,co2measurementunit=addAirQuality.co2measurementunit,temperature=addAirQuality.temperature,temperaturemeasurementunit=addAirQuality.temperaturemeasurementunit,humidity=addAirQuality.humidity,humiditymeasurementunit=addAirQuality.humiditymeasurementunit,time=addAirQuality.time)
+    db_AQP=Airqualityproperty(room_id=addAirQuality.room_id,device_id=addAirQuality.device_id,ventilator=addAirQuality.ventilator,totalnumberofpeople=addAirQuality.totalnumberofpeople,co2=addAirQuality.co2,co2measurementunit=addAirQuality.co2measurementunit,temperature=addAirQuality.temperature,temperaturemeasurementunit=addAirQuality.temperaturemeasurementunit,humidity=addAirQuality.humidity,humiditymeasurementunit=addAirQuality.humiditymeasurementunit,time=addAirQuality.time)
     try:
         db_Session.add(db_AQP)
         db_Session.flush()

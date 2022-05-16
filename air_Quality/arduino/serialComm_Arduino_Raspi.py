@@ -32,6 +32,7 @@ def post_SensorData_API(airQualityData):
     'Accept':'application/json'}
 
     jsonObjects['room_id']='Room_S3_0090'
+    jsonObjects['device_id']='Arduino-1'
     jsonObjects['ventilator']='no'
     jsonObjects['totalnumberofpeople']=3
     jsonObjects['co2measurementunit']='ppm'

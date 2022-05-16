@@ -19,6 +19,7 @@ class Airqualityproperty(Base):
     __tablename__ = 'airqualityproperties'
 
     room_id = Column(ForeignKey('room.room_id'), nullable=False)
+    device_id=Column(String, nullable=False)
     ventilator = Column(String, nullable=False)
     totalnumberofpeople = Column(Integer, nullable=False)
     co2 = Column(Float(53), nullable=False)
