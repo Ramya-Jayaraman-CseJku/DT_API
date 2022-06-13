@@ -19,7 +19,7 @@ class Energyconsumption(Base):
     average_dram_power = Column(Float(53), nullable=False)
 
 class Energyconsumptionmicrocontroller(Base):
-    __tablename__ = 'energyconsumptionmicrocontrollers'
+    __tablename__ = 'energy_consumption_mcu'
 
     device_type = Column(String, nullable=False)
     operation = Column(String, nullable=False)
