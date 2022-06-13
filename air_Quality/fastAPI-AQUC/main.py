@@ -86,9 +86,9 @@ async def add_AirQuality_Properties(addAirQuality:_models.AirQuality_Properties_
         
     return addAirQuality
 
-@app.get("/Room/GetAirQuality/", response_model=List[_models.AirQuality_Properties_Object], status_code = status.HTTP_200_OK)
+@app.get("/Room/GetAirQuality/", response_model=_models.AirQuality_Properties_Object, status_code = status.HTTP_200_OK)
 async def get_AirQuality_Rooms():
-    AQPresults= db_Session.query(Airqualityproperty).all()
+    AQPresults= db_Session.query(Airqualityproperty).order_by(Airqualityproperty.time.desc()).first()
     return AQPresults
     
 @app.get("/Room/{room_id}/AirQuality/temperature/{timestamp}/", response_model=List[_models.AirQuality_Temperature_Object], status_code = status.HTTP_200_OK)
