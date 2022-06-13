@@ -1,4 +1,5 @@
 from sqlite3 import Timestamp
+import zoneinfo
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -6,6 +7,7 @@ from datetime import datetime
 
 class Room_Object(BaseModel):
     room_id: str
+    people_count:int
     room_size:int
     measurement_unit:str
   
@@ -21,9 +23,8 @@ class Update_RoomObject(BaseModel):
 
 class AirQuality_Properties_Object(BaseModel):
     room_id: str
-    device_id:str	
+    device_id:str
     ventilator:str
-    totalnumberofpeople:int
     co2:float
     co2measurementunit:str
     temperature:float
@@ -38,7 +39,6 @@ class AirQuality_Properties_Object(BaseModel):
 class AirQuality_Temperature_Object(BaseModel):
     room_id: str
     ventilator:str
-    totalnumberofpeople:int
     temperature:int
     temperaturemeasurementunit:str
     time:Timestamp
@@ -49,7 +49,6 @@ class AirQuality_Temperature_Object(BaseModel):
 class AirQuality_Humidity_Object(BaseModel):
     room_id: str
     ventilator:str
-    totalnumberofpeople:int
     humidity:int
     humiditymeasurementunit:str
     time:Timestamp
@@ -60,7 +59,6 @@ class AirQuality_Humidity_Object(BaseModel):
 class AirQuality_Co2_Object(BaseModel):
     room_id: str
     ventilator:str
-    totalnumberofpeople:int
     co2:int
     co2measurementunit:str
     time:Timestamp
