@@ -29,4 +29,3 @@ The hostname as the docker container name "timeScaledb", postgres_user as "postg
 *The server in which the postgresql database is running is the docker conatiner name. This has to be specified rather than the localhost server for docker containers to communicate over the network.   
 
 Once the web server is added, we can see that the tables are automatically created with the Database_Schema.sql script as shown in [!figure](./images/TableCreation.png).
-
