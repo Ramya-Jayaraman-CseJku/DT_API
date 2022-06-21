@@ -1,0 +1,72 @@
+version: '3.8' 
+services:
+  airquality:
+    build:
+      context: .
+      dockerfile: ./Air_Quality/Dockerfile
+    networks:
+      - db_network
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - timeScaleDatabase
+    volumes:
+      - ./Air_Quality:/app/
+
+  energyconsumption:
+    build:
+      context: .
+      dockerfile: ./Energy_Consumption/Dockerfile
+    networks:
+      - db_network
+    command: uvicorn main:app --host 0.0.0.0 --port 8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - timeScaleDatabase
+    volumes:
+      - ./Energy_Consumption:/app/
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:6.5.0
+    ports:
+      - 3000:3000
+    networks:
+      - db_network
+      
+  timeScaleDatabase:
+    container_name: timeScaleDatabase
+    image: postgres:14.3-alpine
+    restart: always
+    networks:
+      - db_network
+    volumes:
+      - postgres_data:/var/lib/postgresql/postgres_data
+      - ./Database_Schema.sql:/docker-entrypoint-initdb.d/Database_Schema.sql
+    environment:
+      - PGDATA=/var/lib/postgresql/data/timescale/
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=cdlmint
+      - POSTGRES_DB=CDL-MINT
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    networks:
+      - db_network
+    ports:
+      - 5050:80
+    depends_on:
+      - timeScaleDatabase
+
+volumes:
+  postgres_data:
+networks:
+  db_network:
+    driver: bridge
+
