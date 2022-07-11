@@ -65,3 +65,29 @@ class AirQuality_Co2_Object(BaseModel):
     
     class Config:
         orm_mode = True             
+
+class AirQuality_EnergyConsumption(BaseModel):
+    room_id: str
+    device_id:str
+    operation : str
+    ventilator:str
+    co2:float
+    co2measurementunit:str
+    temperature:float
+    temperaturemeasurementunit:str
+    humidity:float
+    humiditymeasurementunit:str
+    bus_voltage  :float
+    shunt_voltage  :float
+    load_voltage  :float
+    current_consumed  :float
+    power_consumed  :float
+    bus_measurementunit:str
+    shunt_measurementunit:str
+    load_measurementunit:str
+    current_measurementunit:str
+    power_measurementunit:str
+    time:Timestamp
+    
+    class Config:
+        orm_mode = True

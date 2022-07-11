@@ -11,7 +11,7 @@ from session import db_Session
 from databases import Database
 from sqlalchemy.orm import Session
 # import the schema 
-from schema import Room,Airqualityproperty
+from schema import Room,Airqualityproperty,AirqualityEnergyconsumption
 
 #import db models
 import models as _models
@@ -86,9 +86,10 @@ async def add_AirQuality_Properties(addAirQuality:_models.AirQuality_Properties_
         
     return addAirQuality
 
-@app.get("/Room/AirQuality/", response_model=_models.AirQuality_Properties_Object, status_code = status.HTTP_200_OK)
-async def get_AirQuality_Rooms():
-    AQPresults= db_Session.query(Airqualityproperty).order_by(Airqualityproperty.time.desc()).first()
+@app.get("/Room/{room_id}/AirQuality/", response_model=_models.AirQuality_Properties_Object, status_code = status.HTTP_200_OK)
+async def get_AirQuality_Rooms(room_id:str):
+    filteredAQPresults= db_Session.query(Airqualityproperty).filter(Airqualityproperty.room_id==room_id)
+    AQPresults=filteredAQPresults.order_by(Airqualityproperty.time.desc()).first()
     return AQPresults
     
 @app.get("/Room/{room_id}/AirQuality/temperature/{timestamp}/", response_model=List[_models.AirQuality_Temperature_Object], status_code = status.HTTP_200_OK)
@@ -106,4 +107,24 @@ async def get_AirQuality_Co2(room_id:str,timestamp:datetime):
     AQPCo2=db_Session.query(Airqualityproperty.room_id,Airqualityproperty.co2,Airqualityproperty.co2measurementunit,Airqualityproperty.ventilator,Airqualityproperty.time).filter(Airqualityproperty.room_id==room_id,Airqualityproperty.time==timestamp).all()
     return AQPCo2    
 
+#Devices_EnergyConsumption_UseCaseBased
 
+@app.post("/Device/AirQualityEnergyConsumption/", response_model=_models.AirQuality_EnergyConsumption, status_code = status.HTTP_201_CREATED)
+async def add_Device_EC(addAirQualityEC:_models.AirQuality_EnergyConsumption):
+    db_AQ_EC=AirqualityEnergyconsumption(room_id=addAirQualityEC.room_id,device_id=addAirQualityEC.device_id,operation=addAirQualityEC.operation,ventilator=addAirQualityEC.ventilator,co2=addAirQualityEC.co2,co2measurementunit=addAirQualityEC.co2measurementunit,temperature=addAirQualityEC.temperature,temperaturemeasurementunit=addAirQualityEC.temperaturemeasurementunit,humidity=addAirQualityEC.humidity,humiditymeasurementunit=addAirQualityEC.humiditymeasurementunit,bus_voltage=addAirQualityEC.bus_voltage,shunt_voltage=addAirQualityEC.shunt_voltage,load_voltage=addAirQualityEC.load_voltage,current_consumed=addAirQualityEC.current_consumed,power_consumed=addAirQualityEC.power_consumed,bus_measurementunit=addAirQualityEC.bus_measurementunit,shunt_measurementunit=addAirQualityEC.shunt_measurementunit,load_measurementunit=addAirQualityEC.load_measurementunit,current_measurementunit=addAirQualityEC.current_measurementunit,power_measurementunit=addAirQualityEC.power_measurementunit,time=addAirQualityEC.time)
+    try:
+        db_Session.add(db_AQ_EC)
+        db_Session.flush()
+        db_Session.commit()
+    except Exception as ex:
+        logger.error(f"{ex.__class__.__name__}: {ex}")
+        db_Session.rollback()
+        
+    return addAirQualityEC
+
+@app.get("/Device/{device_id}/AirQualityEnergyConsumption/", response_model=_models.AirQuality_EnergyConsumption, status_code = status.HTTP_200_OK)
+async def get_Device_EC(device_id:str):
+        filteredECresults= db_Session.query(AirqualityEnergyconsumption).filter(AirqualityEnergyconsumption.device_id==device_id)
+        ECresults=filteredECresults.order_by(AirqualityEnergyconsumption.time.desc()).first()
+        return ECresults
+    
