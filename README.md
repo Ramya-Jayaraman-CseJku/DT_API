@@ -11,7 +11,7 @@ The energy consumption of microcontrollers are measured in terms of current, pow
 
 The digital twin represents the api that is created for performing the CRUD operations for the airquality  and energy consumption use-case.
 
-The api is created using the fast api framework in Python. The digital twin api for both the use cases are set up with the [docker-compose.yaml file]('https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/docker-compose.yaml'). 
+The api is created using the fast api framework in Python. The digital twin api for both the use cases are set up with the [docker-compose.yaml file](https://github.com/Ramya-Jayaraman-CseJku/DT_API/blob/main/docker-compose.yaml). 
 
 #### Docker Installation
 
@@ -21,7 +21,7 @@ In order to run the docker compose, the docker needs to be installed in the syst
 
 ##### Windows:
 
-Install docker desktop on windows by following the´instructions provided in the [link]('https://docs.docker.com/desktop/install/windows-install/').
+Install docker desktop on windows by following the´instructions provided in the [link](https://docs.docker.com/desktop/install/windows-install/).
 
 #### Deployment
 
