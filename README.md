@@ -44,7 +44,7 @@ If the build is successful, you can see the services running on the ports as sho
 
 ##### PgAdmin- Set up the credentials:
 
-Navigate to the browser [url](http://localhost:5050), the pgAdmin interface will be visible and you can login into the pgAdmin with the following email id (pgadmin4@pgadmin.org) and password(admin).
+Navigate to the browser url "http://localhost:5050", the pgAdmin interface will be visible and you can login into the pgAdmin with the following email id (pgadmin4@pgadmin.org) and password(admin).
 
 ![pgAdmin_Login](./images/pgAdmin_Login.png)
 
@@ -82,7 +82,7 @@ The air quality properties are analysed with respect to room, so the room need t
 
 The room is created with the sample entry as shown in figure.
 
-![post_room](./images/Room_Creation.png)
+![post_room](./images/room_Creation.png)
 
 After entering the sample data, press the execute button, after the POST request is successful, you can see the success response with status 201, row is created in the room table in the timescale database.
 
@@ -102,7 +102,7 @@ The sample air quality measurements for the room is shown in figure.
 
 **Login**:
 
-Navigate to the browser [url](http://localhost:3000), the grafana interface will be visible and you can login with the default username and password as admin. Then change the passwod accordingly.
+Navigate to the browser url "http://localhost:3000", the grafana interface will be visible and you can login with the default username and password as admin. Then change the passwod accordingly.
 
 ![Grafana_Credentials1](./images/Grafana_Login.png)
 
@@ -112,7 +112,7 @@ Navigate to the browser [url](http://localhost:3000), the grafana interface will
 
 Integrate the postgresql database as the datasource for visualisation in grafana. You can create the new dashboard panel and also the add the data source for the panel as shown below.
 
-![Grafana_NewPanelOptions](./images/Grafana_NewPanelOptions.png)
+![Grafana_NewPanelOptions](./images/Grafana_NewPanleOptions.png)
 
 Click on the configuration button and then the add data source button as shown in figure.
 
@@ -132,7 +132,7 @@ Add new panel from the menu and edit the properties for the panel.
 
 The air quality measurements and the energy consumption data can be visualised as shown in figure.
 
-![Grafana_datasource](./images/CDL-MINT AQUC&EC_Grafana.png)
+![Grafana_datasource](./images/CDL-MINT%AQUC&EC_Grafana.png)
 
 
 
