@@ -132,7 +132,7 @@ Add new panel from the menu and edit the properties for the panel.
 
 The air quality measurements and the energy consumption data can be visualised as shown in figure.
 
-![Grafana_datasource](./images/CDL-MINT%AQUC&EC_Grafana.png)
+![Grafana_datasource](./images/AQUC_EC_Grafana.png)
 
 
 
