@@ -9,7 +9,7 @@ class Settings:
     POSTGRES_PASSWORD = "cdlmint"
     POSTGRES_SERVER : str = "timeScaleDatabase"
     POSTGRES_PORT : str = "5432" # default postgres port is 5432
-    POSTGRES_DB : str = "CDL-MINT"
+    POSTGRES_DB : str = "cdl-mint"
     DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
 settings = Settings()

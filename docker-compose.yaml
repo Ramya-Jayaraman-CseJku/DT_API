@@ -1,4 +1,4 @@
-version: '3.8' 
+version: '3.8'
 services:
   airquality:
     build:
@@ -28,6 +28,39 @@ services:
     volumes:
       - ./Energy_Consumption:/app/
 
+  smartroom:
+    container_name: smartroom_api
+    build:
+      context: .
+      dockerfile: ./smart_Room/Dockerfile
+    networks:
+      - db_network
+    command: uvicorn main:app --host 0.0.0.0 --port 8001
+    ports:
+      - 8001:8001
+      - 1883:1883
+    depends_on:
+      - timeScaleDatabase
+    volumes:
+      - ./smart_Room/api/:/app/
+      - ./smart_Room/devices.json:/app/devices.json
+    environment:
+      - TZ=Europe/Paris
+
+  subscriber:
+    container_name: smartroom_mqtt_subscriber
+    build:
+      context: .
+      dockerfile: ./smart_Room/Dockerfile_subscriber
+    networks:
+      - db_network
+    command: python subscriber.py
+
+    depends_on:
+      - smartroom
+    volumes:
+      - ./smart_Room/devices.json:/app/devices.json
+
   grafana:
     container_name: grafana
     image: grafana/grafana:9.0.6
@@ -35,10 +68,10 @@ services:
       - 3000:3000
     networks:
       - db_network
-      
+
   timeScaleDatabase:
     container_name: timeScaleDatabase
-    image: postgres:14.3-alpine
+    image: timescale/timescaledb-ha:pg14-latest
     restart: always
     networks:
       - db_network
@@ -49,7 +82,7 @@ services:
       - PGDATA=/var/lib/postgresql/data/timescale/
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=cdlmint
-      - POSTGRES_DB=CDL-MINT
+      - POSTGRES_DB=cdl-mint
 
   pgadmin:
     container_name: pgadmin
@@ -66,7 +99,7 @@ services:
 
 volumes:
   postgres_data:
+  devices.json:
 networks:
   db_network:
     driver: bridge
-
